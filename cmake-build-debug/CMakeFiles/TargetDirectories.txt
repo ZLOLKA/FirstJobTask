@@ -1,0 +1,3 @@
+/cygdrive/c/Users/Zlolka/Desktop/Job/zlo1/C++/JobTasks/First/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/cygdrive/c/Users/Zlolka/Desktop/Job/zlo1/C++/JobTasks/First/cmake-build-debug/CMakeFiles/First.dir
+/cygdrive/c/Users/Zlolka/Desktop/Job/zlo1/C++/JobTasks/First/cmake-build-debug/CMakeFiles/edit_cache.dir
