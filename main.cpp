@@ -3,29 +3,25 @@
 #include <vector>
 #include <algorithm>
 
-/*
- * Grotty 12:45 13:25
- * Posh 17:25 18:01
- * */
-
 using namespace std;
 
 struct timePair{
-    int fTime;
-    int lTime;
-    int diff;
+    int fTime; // firstHours*60 + firstMinutes
+    int lTime; // lastHours*60 + lastMinutes
+    int diff;  // lTime - fTime
 };
 bool lessTime(string, string);
 timePair getTimePair(string);
 void normalize(vector<string>&);
 
 int main() {
+    vector<string> posh;   // list routes company Posh
+    vector<string> grotty; // list routes company Grotty
+    vector<string> all;    // list all routes
     string str;
-    vector<string> posh;
-    vector<string> grotty;
-    vector<string> all;
     fstream file("input.txt");
 
+    // read file
     while(getline(file, str)){
         if(getTimePair(str).diff < 60){
             all.push_back(str);
@@ -54,6 +50,9 @@ bool inline lessTime(string str1, string str2){
     return getTimePair(str1).fTime < getTimePair(str2).fTime;
 }
 timePair getTimePair(string str){
+    /*
+     * Get struct timePair from str
+     * */
     const size_t fColon = str.find_first_of(':'); // first : (Colon)
     const size_t lColon = str.find_last_of(':');  // last : (Colon)
     int hours;
