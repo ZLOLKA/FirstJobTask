@@ -11,12 +11,10 @@
 using namespace std;
 
 struct timePair{
-    int fHours;
-    int fMinutes;
-    int lHours;
-    int lMinutes;
+    int fTime;
+    int lTime;
+    int diff;
 };
-bool timeLessHour(string);
 bool lessTime(string, string);
 timePair getTimePair(string);
 void normalize(vector<string>&);
@@ -29,13 +27,13 @@ int main() {
     fstream file("input.txt");
 
     while(getline(file, str)){
-        if(timeLessHour(str)){
+        if(getTimePair(str).diff < 60){
             all.push_back(str);
         }
     };
 
     sort(all.begin(), all.end(), lessTime);
-    normalize(all);
+    //normalize(all);
     for(string i: all){
         cout << i << endl;
     }
@@ -52,42 +50,25 @@ int main() {
     return 0;
 }
 
-bool timeLessHour(string str){
-    timePair time = getTimePair(str);
-    int fHour = time.fHours;
-    int fMinut = time.fMinutes;
-    int lHour = time.lHours;
-    int lMinut = time.lMinutes;
-
-    if(fHour == lHour){
-        return true;
-    } else if(lHour - fHour == 1){
-        return fMinut >= lMinut;
-    }else{
-        return false;
-    }
-}
-bool lessTime(string str1, string str2){
-    timePair time1 = getTimePair(str1);
-    timePair time2 = getTimePair(str2);
-
-    if(time1.fHours < time2.fHours){
-        return true;
-    }else if(time1.fHours == time2.fHours){
-        if(time1.fMinutes < time2.fMinutes){
-            return true;
-        }
-    }
-    return false;
+bool inline lessTime(string str1, string str2){
+    return getTimePair(str1).fTime < getTimePair(str2).fTime;
 }
 timePair getTimePair(string str){
     const size_t fColon = str.find_first_of(':'); // first : (Colon)
     const size_t lColon = str.find_last_of(':');  // last : (Colon)
+    int hours;
+    int minutes;
     timePair ret;
-    ret.fHours = str[fColon-1] - '0' + (str[fColon-2] - '0') * 10;
-    ret.fMinutes = str[fColon+2] - '0' + (str[fColon+1] - '0') * 10;
-    ret.lHours = str[lColon-1] - '0' + (str[lColon-2] - '0') * 10;
-    ret.lMinutes = str[lColon+2] - '0' + (str[lColon+1] - '0') * 10;
+
+    hours = str[fColon-1] - '0' + (str[fColon-2] - '0') * 10;
+    minutes = str[fColon+2] - '0' + (str[fColon+1] - '0') * 10;
+    ret.fTime = hours*60 + minutes;
+
+    hours = str[lColon-1] - '0' + (str[lColon-2] - '0') * 10;
+    minutes = str[lColon+2] - '0' + (str[lColon+1] - '0') * 10;
+    ret.lTime = hours*60 + minutes;
+
+    ret.diff = ret.lTime - ret.fTime;
 
     return ret;
 }
