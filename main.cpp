@@ -34,18 +34,16 @@ int main() {
 bool timeLessHour(string str){
     const size_t fColon = str.find_first_of(':'); // first : (Colon)
     const size_t lColon = str.find_last_of(':');  // last : (Colon)
-    if(str[lColon-2] == str[fColon-2]){
-        if(str[lColon-1] == str[fColon-1]){
+    int fHour = str[fColon-1] - '0' + (str[fColon-2] - '0') * 10;
+    int fMinut = str[fColon+2] - '0' + (str[fColon+1] - '0') * 10;
+    int lHour = str[lColon-1] - '0' + (str[lColon-2] - '0') * 10;
+    int lMinut = str[lColon+2] - '0' + (str[lColon+1] - '0') * 10;
 
-        }else if(str[lColon-1] - str[fColon-1] == 1){
-
-        }else{
-            return false;
-        }
-    }else if(str[lColon-2] - str[fColon-2] == 1){ // 19:nn 20:nn or 09:nn 10:nn
-
+    if(fHour == lHour){
+        return true;
+    } else if(lHour - fHour == 1){
+        return fMinut >= lMinut;
     }else{
         return false;
     }
-    return true;
 }
