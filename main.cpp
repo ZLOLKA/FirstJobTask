@@ -29,13 +29,10 @@ int main() {
     };
 
     sort(all.begin(), all.end(), lessTime);
-    //normalize(all);
+    normalize(all);
     for(string i: all){
-        cout << i << endl;
+        (i[0] == 'P' ? posh : grotty).push_back(i);
     }
-
-    sort(posh.begin(), posh.end(), lessTime);
-    sort(grotty.begin(), grotty.end(), lessTime);
     for(string i: posh){
         cout << i << endl;
     }
@@ -72,13 +69,33 @@ timePair getTimePair(string str){
     return ret;
 }
 void normalize(vector<string>& all){
-    timePair timePair1, timePair2;
+    timePair tP1, tP2;
 
     for(int i = 0; i < all.size() - 1; ++i){
-        timePair1 = getTimePair(all[i]);
+        tP1 = getTimePair(all[i]);
         for(int j = i + 1; j < all.size(); ++j){
-            timePair2 = getTimePair(all[j]);
-
+            tP2 = getTimePair(all[j]);
+            if(tP2.fTime - tP1.fTime < 60){
+                if(tP1.fTime == tP2.fTime && tP1.lTime == tP2.lTime){
+                    all.erase(all.begin()+(all[i][0] == 'P' ? j : i));
+                    break;
+                }
+                if(
+                        ((tP1.fTime == tP2.fTime && tP1.lTime < tP2.lTime) ||
+                        (tP1.fTime > tP2.fTime && tP1.lTime == tP2.lTime) ||
+                        (tP1.fTime > tP2.fTime && tP1.lTime < tP2.lTime))
+                ){
+                    all.erase(all.begin()+j);
+                }else{
+                    if(tP1.fTime < tP2.fTime && tP1.lTime < tP2.lTime){
+                        break;
+                    }
+                    all.erase(all.begin()+i);
+                    break;
+                }
+            }else{
+                break;
+            }
         }
     }
 }
