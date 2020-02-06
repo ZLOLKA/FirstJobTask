@@ -19,17 +19,27 @@ struct timePair{
 bool timeLessHour(string);
 bool lessTime(string, string);
 timePair getTimePair(string);
+void normalize(vector<string>&);
 
 int main() {
     string str;
     vector<string> posh;
     vector<string> grotty;
+    vector<string> all;
     fstream file("input.txt");
+
     while(getline(file, str)){
         if(timeLessHour(str)){
-            (str[0] == 'P' ? posh : grotty).push_back(str);
+            all.push_back(str);
         }
     };
+
+    sort(all.begin(), all.end(), lessTime);
+    normalize(all);
+    for(string i: all){
+        cout << i << endl;
+    }
+
     sort(posh.begin(), posh.end(), lessTime);
     sort(grotty.begin(), grotty.end(), lessTime);
     for(string i: posh){
@@ -80,4 +90,15 @@ timePair getTimePair(string str){
     ret.lMinutes = str[lColon+2] - '0' + (str[lColon+1] - '0') * 10;
 
     return ret;
+}
+void normalize(vector<string>& all){
+    timePair timePair1, timePair2;
+
+    for(int i = 0; i < all.size() - 1; ++i){
+        timePair1 = getTimePair(all[i]);
+        for(int j = i + 1; j < all.size(); ++j){
+            timePair2 = getTimePair(all[j]);
+
+        }
+    }
 }
