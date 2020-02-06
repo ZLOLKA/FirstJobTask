@@ -19,10 +19,11 @@ int main() {
     vector<string> grotty; // list routes company Grotty
     vector<string> all;    // list all routes
     string str;
-    fstream file("input.txt");
+    fstream fin("input.txt");
+    fstream fout("output.txt", fstream::out);
 
     // read file
-    while(getline(file, str)){
+    while(getline(fin, str)){
         if(getTimePair(str).diff < 60){
             all.push_back(str);
         }
@@ -34,11 +35,11 @@ int main() {
         (i[0] == 'P' ? posh : grotty).push_back(i);
     }
     for(string i: posh){
-        cout << i << endl;
+        fout << i << endl;
     }
-    cout << endl;
+    fout << endl;
     for(string i: grotty){
-        cout << i << endl;
+        fout << i << endl;
     }
     return 0;
 }
